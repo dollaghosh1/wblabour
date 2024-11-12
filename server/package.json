@@ -1,0 +1,22 @@
+{
+  "name": "wblabour",
+  "version": "1.0.0",
+  "description": "wblablour",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "javascript",
+    "react",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "-": "^0.0.1"
+  }
+}
