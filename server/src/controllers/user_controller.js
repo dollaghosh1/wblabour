@@ -126,20 +126,13 @@ const loginUser =  asyncHandler( async (req, res) => {
 
 
 } )
-/*const logoutUser =  asyncHandler( async (req, res) => {
-    await User.findByIdAndUpdate(
-         req.user._id,
-         {
-             $unset: {
-                 refreshToken: 1
-             }
-         },
-         {
-             new:true
-         }
- 
- 
-    )
+const logoutUser =  asyncHandler( async (req, res) => {
+    const user_id = req.user.id;
+    //console.log(user_id);
+   // process.exit(1);
+    if(user_id){
+    const result = await pool.query("UPDATE users SET refreshtoken=1 where id = $1", [user_id]);
+    
     const option ={
      httpOnly: true,
      secure: true
@@ -149,7 +142,7 @@ const loginUser =  asyncHandler( async (req, res) => {
      .clearCookie("accessToken", option)
      .clearCookie("refreshToken", option)
      .json(new ApiResponse(200, {}, "User logged Out"))
+    }
  
- 
- })*/
-export { generateAccessAndRefereshTokens,registerUser,loginUser }
+ })
+export { generateAccessAndRefereshTokens,registerUser,loginUser,logoutUser }

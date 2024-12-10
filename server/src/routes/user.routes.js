@@ -1,14 +1,14 @@
 import { Router } from "express";
-import {registerUser,loginUser} from "../controllers/user_controller.js";
+import {registerUser,loginUser,logoutUser} from "../controllers/user_controller.js";
 //import { upload } from "../middlewares/multer.middleware.js"
-//import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router()
 
 router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 // // Secure routes
-// router.route("/logout").post(verifyJWT, logoutUser)
+router.route("/logout").post(verifyJWT, logoutUser)
 // router.route("/refreshtoken").post(refreshAccessToken)
 // router.route("/current-user").get(verifyJWT, getCurentUser)
 // router.route("/update-account").patch(verifyJWT, updateAccountUser)
