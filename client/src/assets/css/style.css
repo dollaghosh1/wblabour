@@ -80,6 +80,7 @@ a,a:hover,a:focus{color:inherit;text-decoration:none;transition:all .3s; outline
 .menu .nav-item .dropdown-menu a:hover{ color: #feffd6; background: none; }
 .menu .nav-item .dropdown-menu a:focus { background: transparent!important; }
 
+
 @-moz-document url-prefix() {
   .news-ticker span { padding-bottom:9px!important; padding-top:8px!important; } 
 }

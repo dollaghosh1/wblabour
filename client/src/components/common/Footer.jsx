@@ -20,12 +20,12 @@ const Footer = () => {
                 National Informatics Centre (NIC) will not be responsible for any loss to any person
                 caused by inaccuracy in the information available on this Website. Any discrepancy
                 found may be brought to the notice of Department of Labour, Govt. of West Bengal.
-                This site is best viewed in Firefox, Chrome.
+                This site is best viewed in Firefox, Chrome
               </p>
             </div>
           </div>
           <div className="site-count">
-            <span className="counter">001,888,267</span>
+            <span className="counter">001,888,26</span>
             <span className="site-counter-text">Site Counter</span>
           </div>
         </div>
