@@ -6,6 +6,9 @@ const About = () => {
   return (
 
     <div className="about-us">
+      <div className="banner-inner">
+          <img className="d-block w-100" src="/src/assets/images/innerbanner.jpg" alt="inner-banner" />
+        </div>
     <div className="container">   
       <div className="row">
         <div className="col-md-12">

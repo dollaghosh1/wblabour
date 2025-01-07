@@ -75,7 +75,9 @@ const Header = () => {
 
                <div className="col-md-3 text-left">
 
-                 <a className="navbar-brand" href="index.html">
+               
+                 <Link to="/" className="navbar-brand">
+                  
                   <div className="main-logo">
                     <img
                       src="/images/labour_logo.png"
@@ -85,7 +87,7 @@ const Header = () => {
                       className="img-fluid"
                     />
                   </div>
-                </a>
+                  </Link>
                 <button
                   className="navbar-toggler"
                   type="button"

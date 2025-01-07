@@ -1,12 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FaUser, FaSync } from 'react-icons/fa';
-
-const LoginBody = () => {
+import axios from "axios";
+  const LoginBody = () => {
   const [captchaText, setCaptchaText] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
   const [error, setError] = useState('');
   const canvasRef = useRef(null);
+ // const [login, setLogin] = useState([]);
 
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/jokes")
+  //     .then((response) => {
+  //       setJokes(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+    
+  // };
   // Generate a random CAPTCHA
   const generateCaptcha = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -60,13 +79,23 @@ const LoginBody = () => {
   };
 
   // Handle Form Submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (captchaInput !== captchaText) {
-      setError('Captcha does not match. Please try again.');
-      return;
+    try {
+      if (captchaInput !== captchaText) {
+        setError('Captcha does not match. Please try again.');
+        return;
+      }
+      alert('Captcha validated! Proceeding with login.');
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', { username, password });
+     // console.log(response.data);
+      const { token } = response.data;
+      localStorage.setItem('token', token); // Save the token
+      setMessage('Login successful!');
+    } catch (error) {
+      setMessage(error.response?.data?.error || 'Login failed');
     }
-    alert('Captcha validated! Proceeding with login.');
+   
   };
 
   return (
@@ -88,7 +117,10 @@ const LoginBody = () => {
               id="username"
               placeholder="Enter your username"
               style={styles.input}
-            />
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} required 
+              />
+            
           </div>
 
           {/* Password Field */}
@@ -101,6 +133,7 @@ const LoginBody = () => {
               id="password"
               placeholder="Enter your password"
               style={styles.input}
+              value={password} onChange={(e) => setPassword(e.target.value)} required 
             />
           </div>
 
@@ -116,6 +149,8 @@ const LoginBody = () => {
               style={styles.captchaInput}
             />
           </div>
+
+
           {error && <div style={styles.error}>{error}</div>}
 
           {/* Login Button */}
@@ -125,6 +160,7 @@ const LoginBody = () => {
             </button>
           </div>
         </form>
+        <p style={styles.success}>{message}</p>
       </div>
     </div>
   );
@@ -219,6 +255,12 @@ const styles = {
     color: 'red',
     fontSize: '14px',
     marginTop: '-10px',
+    marginBottom: '20px',
+  },
+  success: {
+    color: 'green',
+    fontSize: '14px',
+    marginTop: '4px',
     marginBottom: '20px',
   },
   buttonGroup: {
