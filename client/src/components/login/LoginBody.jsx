@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FaUser, FaSync } from 'react-icons/fa';
 import axios from "axios";
+import CryptoJS from "crypto-js";
+
   const LoginBody = () => {
   const [captchaText, setCaptchaText] = useState('');
   const [captchaInput, setCaptchaInput] = useState('');
@@ -77,24 +79,33 @@ import axios from "axios";
     setCaptchaInput('');
     setError('');
   };
+  const encryptData = (password, secretKey) => {
+  //function encryptData(password, secretKey) {
+  //function encryptData(data, secretKey) {
+    // Encrypt the data
+    const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(password), secretKey).toString();
+    return ciphertext;
+  }
 
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //alert('test');
     try {
+      const newpassword = { password };
+      const secretKey = "mySuperSecretKey123";
+      const encryptedpass = encryptData(newpassword, secretKey);
       if (captchaInput !== captchaText) {
         setError('Captcha does not match. Please try again.');
         return;
       }
-      alert('Captcha validated! Proceeding with login.');
-      const response = await axios.post('http://localhost:8000/api/v1/users/login', { username, password });
-     // console.log(response.data);
-      const { token } = response.data;
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', { username, encryptedpass });
+     const { token } = response.data;
       localStorage.setItem('token', token); // Save the token
       setMessage('Login successful!');
-    } catch (error) {
-      setMessage(error.response?.data?.error || 'Login failed');
-    }
+   } catch (error) {
+     setMessage(error.response?.data?.error || 'Login failed');
+   }
    
   };
 

@@ -5,6 +5,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import pool from "../db/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import CryptoJS from "crypto-js";
+
 
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -75,15 +77,70 @@ const registerUser = asyncHandler( async (req, res, next) => {
   
     
 } )
+const decryptPassword = (encryptedPassword) => {
+    const secretKey = "mySuperSecretKey123";
+    const bytes = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
+    const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+    //console.log(originalPassword);
+    return originalPassword;
+  };
+// function decryptData(encryptedData, skey) {
+ 
+//    const algorithm = "aes-256-cbc";
+//    const key = crypto.createHash("sha256").update(skey).digest("base64").substr(0, 32);
+//    //const iv = Buffer.from(div, "hex");
+//    const encryptedText = encryptedData.encryptedData;
+//    const decipher = crypto.createDecipheriv(algorithm, key);
+     
+//    //const decipher = crypto.createDecipheriv(algorithm, key, iv);
+//    let decrypted = decipher.update(encryptedText, 'base64', 'utf8');
+//     decrypted = Buffer.concat([decrypted, decipher.final()]);
+//     //return decrypted;
 
+//    console.log(decrypted);
+//    // return decoded;
+//   //  decrypted = Buffer.concat([decrypted, decipher.final()]);
+//    // return JSON.parse(decrypted.toString());
+//    //let decrypted = decipher.update(encryptedText);
+//   // decrypted = Buffer.concat([decrypted, decipher.final()]);
+//   //let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+//   //decrypted += decipher.final('utf8');
+//   //console.log(decrypted);
+//  //  return decrypted;
+//   }
 const loginUser =  asyncHandler( async (req, res) => {
+    
     // req body -> data
     // username or email
     //find the user
     //password check
     //access and referesh token
     //send cookie
-    const {email,username,password} = req.body
+    // const encryptedPayload = {
+    //     ciphertext: req.body, // Replace with actual encrypted data
+    //     iv: crypto.randomBytes(16), // Replace with actual IV used during encryption
+    //   };
+   // const encryptedData = req.body; // Replace with your encrypted data (hex format)
+    //const skey = "mySuperSecretKey123"// Replace with your 32-byte key
+   // const div = crypto.randomBytes(16); // Replace with your 16-byte IV
+
+       //const secretKey = "mySuperSecretKey123";
+      // console.log(secretKey);
+  //  const decryptedData = decryptData(encryptedData, skey);
+    // console.log("Decrypted Data:", decryptedData);
+    // console.log(req.body.encryptedpass);
+    //const {email,username,password} = req.body
+   // console.log(req.body);
+    const email = req.body.email;
+    const username = req.body.username;
+    const encryptedPassword = req.body.encryptedpass;
+     const decryptedPassword = decryptPassword(encryptedPassword);
+     const datapass = JSON.parse(decryptedPassword);
+    //const decryptedPassword = decryptPassword(password);
+    //console.log(datapass.password);
+    //console.log("Decrypted Password:", decryptedPassword);
+    
+   // process.exit();
     if(!(username || email)){
         throw new(400, "username or email is required")
     }
@@ -93,7 +150,8 @@ const loginUser =  asyncHandler( async (req, res) => {
     }
     
         // Verify password
-        const passwordValid = await bcrypt.compare(password, existedUser.password);
+        const passwordValid = await bcrypt.compare(datapass.password, existedUser.password);
+       //console.log(decryptedPassword.password);
         if (!passwordValid) {
             throw new ApiError(404, "Incorrect email and password combination")
             
