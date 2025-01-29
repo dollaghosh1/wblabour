@@ -100,8 +100,9 @@ import CryptoJS from "crypto-js";
         return;
       }
       const response = await axios.post('http://localhost:8000/api/v1/users/login', { username, encryptedpass });
-     const { token } = response.data;
-      localStorage.setItem('token', token); // Save the token
+     //console.log(response.data.data.accessToken)
+      const { accessToken } = response.data.data;
+      localStorage.setItem('token', accessToken); // Save the token
       setMessage('Login successful!');
    } catch (error) {
      setMessage(error.response?.data?.error || 'Login failed');

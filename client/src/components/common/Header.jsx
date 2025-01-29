@@ -127,10 +127,46 @@ const Header = () => {
                         Circulars & Notifications
                       </a>
                     </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        Citizen Corner
+                      <li className="nav-item dropdown" id="myDropdown">
+                      <a
+                        className="nav-link dropdown-toggle"
+                        href="about-us.html"
+                        data-bs-toggle="dropdown"
+                      >
+                       Citizen Corner
                       </a>
+                    
+                      <ul className="dropdown-menu">
+                        <li>
+                        <Link to="/faq" className="dropdown-item">
+                          FAQ
+                        </Link>
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href="history-overview.html"
+                          >
+                            May we help you
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href="history-overview.html"
+                          >
+                            Right to public services
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href="history-overview.html"
+                          >
+                           Citizen Charter
+                          </a>
+                        </li>
+                      </ul>
                     </li>
                     <li className="nav-item dropdown" id="myDropdown">
                       <a

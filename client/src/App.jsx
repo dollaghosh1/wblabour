@@ -13,6 +13,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import FaqPage from './pages/FaqPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/faq" element={<FaqPage />} />
       </Routes>
     </Router>
   );
